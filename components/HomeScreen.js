@@ -3,19 +3,27 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Input, Image } from 'react-native-elements';
 
+var pressedToAddInput = false;
+
 export default class Homescreen extends Component {
 
-  addInput() {
-    return (
-      <Input placeholder='ingredient' />
-    );
-  };
+ 
+  addInput(){
+      if(pressedToAddInput == true){
+        return(
+          <View>
+            <Input placeholder='ingredient'/>
+          </View>
+        );
+        pressedToAddInput = false;
+      }
+  }
 
   render() {
     return (
       <View style={styles.background}>
-        <ScrollView>
-          <View >
+        <ScrollView style={{flex:1}}>
+          <View>
             <Text style={styles.title}>Insert ingedients that you have:</Text>
             <Input
               placeholder='ingredient'
@@ -29,19 +37,22 @@ export default class Homescreen extends Component {
             <Input
               placeholder='ingredient'
             />
+            {this.addInput()}
           </View>
-          <Button
+        </ScrollView>
+
+        {/* <View style={{justifyContent: 'space-around', alignItems:'center'}}> */}
+        
+        <Button
             title="Add one more ingredient"
             color='#84A6A5'
-            onPress={() => this.addInput()} />
+            onPress={() => pressedToAddInput=true} />
 
           <Button
             title="Go to Meals"
             color='#84A6A5'
             onPress={() => this.props.navigation.navigate('Meals')} />
-        </ScrollView>
 
-        <View style={{justifyContent: 'space-around', alignItems:'center'}}>
           <Image source={{ uri: 'https://cdn4.iconfinder.com/data/icons/traits/512/cook-512.png' }}
             style={{ width: 200, height: 200 }} />
 
@@ -55,7 +66,7 @@ export default class Homescreen extends Component {
               title="Go to Welcome"
               color='#84A6A5'
               onPress={() => this.props.navigation.navigate('Welcome')} />
-          </View>
+          {/* </View> */}
         </View>
 
 
@@ -71,7 +82,7 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: '#f5f5f5',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     margin: 10,
   },

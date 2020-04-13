@@ -7,6 +7,7 @@ import AboutScreen from './components/AboutScreen';
 import WelcomeScreen from "./components/WelcomeScreen";
 import MealsListScreen from './components/MealsListScreen';
 import MealScreen from './components/MealScreen';
+import DatabaseMealScreen from './components/DatabaseMealScreen';
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -23,6 +24,9 @@ const AppNavigator = createStackNavigator({
   },
   SpecificMeal: {
     screen: MealScreen
+  },
+  DatabaseSpecificMeal: {
+    screen: DatabaseMealScreen
   }
 }, {
   initialRouteName: "Welcome"

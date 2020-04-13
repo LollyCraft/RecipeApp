@@ -22,7 +22,7 @@ export default class MealsListScreen extends Component {
     render() {
         return (
             <View style={styles.background}>
-                <Text style={styles.title}>Possible meals that you can make with the ingrediantes you have</Text>
+                <Text style={styles.title}>Possible meals that you can make with the ingredients you have</Text>
                 <ScrollView>
                     {
                         flatList.map((dish, i) => (

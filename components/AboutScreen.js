@@ -3,7 +3,7 @@ import { Button, View, Text, StyleSheet, ScrollView, FlatList, TouchableOpacity 
 import { Card } from 'react-native-elements';
 
 import firebase from 'firebase';
-import meals from './DatabaseComponent';
+// import meals from './DatabaseComponent';
 
 export var mealSelected_index;
 
@@ -53,10 +53,10 @@ export default class Aboutscreen extends Component {
 
         data.forEach((doc) => {
           meals.push({
-            key: doc.key,
+            key: doc.toJSON().key,
             mealName: doc.toJSON().mealName,
-            avatar_url: doc.avatar_url,
-            yourIngredients: doc.yourIngredients,
+            avatar_url: doc.toJSON().avatar_url,
+            yourIngredients: doc.toJSON().yourIngredients,
           })
           this.setState({
             meals: meals,
@@ -119,34 +119,36 @@ export default class Aboutscreen extends Component {
   render() {
     return (
       <View style={styles.background}>
-        <Text>About Screen</Text>
+        <Text style={styles.title}>Possible meals that you can make with the ingredients you have</Text>
+
+
+        <FlatList
+          data={this.state.meals}
+          renderItem={({ item, index }) => {
+            return (
+              // <Text style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              //   {item.mealName}</Text>
+
+              <TouchableOpacity
+                style={styles.background}
+                onPress={() => {
+                  this.props.navigation.navigate('DatabaseSpecificMeal');
+                  mealSelected_index = index;
+                }}>
+                <Card image={{ uri: item.avatar_url }}>
+                  <Text style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 15 }}>{item.mealName}</Text>
+                  <Text style={{ marginBottom: 10 }}>{item.yourIngredients}</Text>
+                </Card>
+              </TouchableOpacity >
+            );
+          }}>
+        </FlatList>
+
         <Button
-          title="Go to Home"
+          title="Go back to search"
           color='#84A6A5'
           onPress={() => this.props.navigation.navigate('Home')} />
 
-        
-          <FlatList
-            data={this.state.meals}
-            renderItem={({ item, index }) => {
-              return (
-                // <Text style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                //   {item.mealName}</Text>
-                
-                  <TouchableOpacity onPress={() => {
-                    // this.props.navigation.navigate('SpecificMeal');
-                    mealSelected_index = index;
-                  }}>
-                    <Card image={{ uri: item.avatar_url}}>
-                      <Text style={{ fontWeight: 'bold', marginBottom: 10, marginTop: 15 }}>{item.mealName}</Text>
-                      <Text style={{ marginBottom: 10 }}>{item.yourIngredients}</Text>
-                    </Card>
-                  </TouchableOpacity >
-              );
-            }}>
-          </FlatList>
-          
-        
       </View>
     )
   }
@@ -166,5 +168,5 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17,
-},
+  },
 });

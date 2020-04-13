@@ -6,7 +6,6 @@ export default class Welcomescreen extends Component {
   render() {
     return (
       <View style={styles.background}>
-        <Text>Welcome Screen</Text>
         <Button
           title="Go to Home"
           color='#84A6A5'
